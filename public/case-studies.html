@@ -2,134 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Case Studies | GKR & Co.</title>
+  <meta name="description" content="Explore real-world case studies in International Tax, Transfer Pricing, and Corporate Tax Litigation managed by GKR & Co Chartered Accountants.">
+  
+  <!-- Shared External Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
   <style>
-    body { 
-      background: #0b0f19; 
-      color: #f8fafc; 
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      margin: 0; 
-    }
-    .navbar { 
-      background: #0f172a; 
-      padding: 1rem 2rem; 
-      border-bottom: 1px solid #1e293b; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center;
-    }
-    .brand { 
-      font-weight: bold; 
-      color: #fff; 
-      text-decoration: none; 
-      font-size: 1.25rem;
-    }
-    .nav-links {
-      list-style: none;
+    /* Mobile-Specific Adjustments for Case Studies */
+    .case-card {
+      max-width: 100%;
+      cursor: default;
       display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      margin: 0;
-      padding: 0;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .nav-links a {
-      color: #cbd5e1;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
+
+    .case-card h3 {
+      font-size: clamp(1.1rem, 3.5vw, 1.35rem);
+      margin-bottom: 0.75rem;
+      word-break: break-word;
     }
-    .nav-links a:hover {
-      color: #38bdf8;
+
+    .case-card p {
+      white-space: pre-line;
+      word-wrap: break-word;
     }
-    .admin-nav-btn {
-      background: rgba(56, 189, 248, 0.1);
-      color: #38bdf8 !important;
-      border: 1px solid #38bdf8;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: all 0.2s !important;
+
+    .case-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      display: block;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
     }
-    .admin-nav-btn:hover {
-      background: #38bdf8;
-      color: #0f172a !important;
-    }
-    .container { 
-      max-width: 900px; 
-      margin: 2rem auto; 
-      padding: 0 1rem; 
-    }
-    h1 { 
-      color: #38bdf8; 
-      text-align: center; 
-      margin-bottom: 2rem; 
-    }
-    .grid { 
-      display: grid; 
-      gap: 1.5rem; 
-    }
-    .card { 
-      background: #1e293b; 
-      border: 1px solid #334155; 
-      padding: 1.5rem; 
-      border-radius: 10px; 
-    }
-    .card h3 { 
-      color: #38bdf8; 
-      margin-top: 0; 
-    }
-    .card p { 
-      color: #cbd5e1; 
-      line-height: 1.6; 
-      white-space: pre-line; 
-    }
-    .date { 
-      font-size: 0.75rem; 
-      color: #64748b; 
-      margin-top: 1rem; 
-      display: block; 
+
+    /* Responsive grid override for phone screens */
+    @media (max-width: 640px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      
+      .hero {
+        padding: 2.5rem 0;
+      }
     }
   </style>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="/" class="brand">GKR & Co.</a>
-    <ul class="nav-links">
-      <li><a href="/#services">Services</a></li>
-      <li><a href="/#profile">About</a></li>
-      <li><a href="/case-studies">Case Studies</a></li>
-      <li><a href="/#contact">Contact</a></li>
-      <li><a href="/admin/login" class="admin-nav-btn">Admin Portal</a></li>
-    </ul>
-  </nav>
 
-  <div class="container">
-    <h1>Our Case Studies</h1>
-    <div id="studiesList" class="grid">Loading case studies...</div>
-  </div>
+  <!-- Site Header & Mobile Collapsible Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">GKR & Co. <span>Chartered Accountants</span></a>
+        <!-- Hamburger Button for Mobile -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+        
+        <!-- Sliding Nav Menu -->
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/#profile">About</a></li>
+          <li><a href="/case-studies" style="color: var(--accent-blue);">Case Studies</a></li>
+          <li><a href="/#contact">Contact</a></li>
+          <li><a href="/admin/login" class="admin-nav-btn">Admin Portal</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Our Case Studies</h1>
+        <p>Examine how our structured audit rigor and tax expertise deliver defensible positioning and compliance resolution.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Case Studies Container -->
+  <section class="section">
+    <div class="container">
+      <div id="studiesList" class="team-grid">
+        <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; padding: 2rem 0;">Loading case studies...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 GKR & Co, Chartered Accountants. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Mobile Menu Script & Dynamic API Integration -->
   <script>
+    // Toggle Navigation Drawer on Mobile Menu Click
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navLinks.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // Close mobile menu when any nav item is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Fetch and Display Published Case Studies
     async function loadCaseStudies() {
       const container = document.getElementById('studiesList');
       try {
         const res = await fetch('/api/case-studies');
         const studies = await res.json();
 
-        if (studies.length === 0) {
-          container.innerHTML = '<p style="text-align:center; color:#94a3b8;">No case studies available yet.</p>';
+        if (!Array.isArray(studies) || studies.length === 0) {
+          container.innerHTML = '<p style="text-align:center; color: var(--text-muted); grid-column: 1 / -1; padding: 2rem 0;">No case studies available yet.</p>';
           return;
         }
 
         container.innerHTML = studies.map(s => `
-          <div class="card">
-            <h3>${s.title}</h3>
-            <p>${s.description}</p>
-            <span class="date">Published: ${new Date(s.createdAt).toLocaleDateString()}</span>
+          <div class="card case-card">
+            <div>
+              <h3>${s.title}</h3>
+              <p>${s.description}</p>
+            </div>
+            <span class="case-date">
+              Published: ${new Date(s.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+            </span>
           </div>
         `).join('');
       } catch (err) {
-        container.innerHTML = '<p style="color:#ef4444; text-align:center;">Failed to load case studies.</p>';
+        container.innerHTML = '<p style="color: #ef4444; text-align: center; grid-column: 1 / -1; padding: 2rem 0;">Failed to load case studies.</p>';
       }
     }
 

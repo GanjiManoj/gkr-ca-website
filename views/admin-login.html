@@ -2,142 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Admin Login | GKR & Co.</title>
+  
+  <!-- Shared Stylesheet -->
+ <link rel="stylesheet" href="/styles.css">
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body { 
-      background: #0b0f19; 
-      color: #f8fafc; 
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    body {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* HEADER STYLES */
-    .navbar {
-      background: #0f172a;
-      border-bottom: 1px solid #1e293b;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-    .brand-logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #ffffff;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .brand-logo span {
-      color: #38bdf8;
-      font-weight: 400;
-      font-size: 0.95rem;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .nav-links a {
-      color: #cbd5e1;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: #38bdf8;
-    }
-    .admin-btn {
-      border: 1px solid #334155;
-      padding: 0.45rem 1rem;
-      border-radius: 6px;
-      color: #38bdf8 !important;
-      background: rgba(56, 189, 248, 0.05);
-    }
-    .admin-btn:hover {
-      background: rgba(56, 189, 248, 0.15);
-      border-color: #38bdf8;
-    }
-
-    /* LOGIN CONTAINER */
-    .content-container {
+    .login-wrapper {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 2rem 1rem;
     }
-    .login-card { 
-      background: #1e293b; 
-      padding: 2.5rem 2rem; 
-      border-radius: 12px; 
-      border: 1px solid #334155; 
-      width: 100%; 
-      max-width: 380px; 
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+
+    .login-card {
+      background: var(--bg-card);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow);
     }
-    h2 { 
-      color: #38bdf8; 
+
+    .login-card h2 {
+      color: var(--accent-blue);
       margin-top: 0;
-      margin-bottom: 1.5rem; 
-      text-align: center; 
+      margin-bottom: 1.5rem;
+      text-align: center;
       font-size: 1.5rem;
     }
-    .form-group { 
-      margin-bottom: 1.25rem; 
-    }
-    label { 
-      display: block; 
-      font-size: 0.85rem; 
-      color: #94a3b8; 
-      margin-bottom: 0.4rem; 
-      font-weight: 500;
-    }
-    input { 
-      width: 100%; 
-      padding: 0.75rem; 
-      background: #0f172a; 
-      border: 1px solid #334155; 
-      border-radius: 6px; 
-      color: #fff; 
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    input:focus {
-      border-color: #38bdf8;
-    }
-    button { 
-      width: 100%; 
-      padding: 0.75rem; 
-      background: #38bdf8; 
-      color: #0f172a; 
-      border: none; 
-      font-weight: bold; 
-      border-radius: 6px; 
-      cursor: pointer; 
-      margin-top: 0.5rem; 
-      font-size: 0.95rem;
-      transition: background-color 0.2s;
-    }
-    button:hover {
-      background: #7dd3fc;
-    }
-    button:disabled {
-      background: #64748b;
-      cursor: not-allowed;
-    }
+
     .error-msg {
       background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.4);
@@ -149,45 +52,93 @@
       text-align: center;
       display: none;
     }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    button:disabled {
+      background: var(--text-muted);
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER NAVBAR -->
-  <nav class="navbar">
-    <a href="/" class="brand-logo">
-      GKR & Co. <span>Chartered Accountants</span>
-    </a>
-    <div class="nav-links">
-      <a href="/#services">Services</a>
-      <a href="/#about">About</a>
-      <a href="/case-studies">Case Studies</a>
-      <a href="/#contact">Contact</a>
+  <!-- Site Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">GKR & Co. <span>Chartered Accountants</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/#profile">About</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <!-- LOGIN CARD CONTAINER -->
-  <div class="content-container">
+  <!-- Login Main Content -->
+  <main class="login-wrapper">
     <div class="login-card">
-      <h2>GKR Admin Login</h2>
+      <h2>Admin Login</h2>
       
       <div id="errorMessage" class="error-msg"></div>
 
       <form id="loginForm">
-        <div class="form-group">
-          <label for="username">Username</label>
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="username" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 500;">Username</label>
           <input type="text" id="username" name="username" required autocomplete="username">
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label for="password" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 500;">Password</label>
           <input type="password" id="password" name="password" required autocomplete="current-password">
         </div>
-        <button type="submit" id="submitBtn">Sign In</button>
+        <button type="submit" id="submitBtn" class="btn" style="width: 100%; border: none; cursor: pointer; font-size: 0.95rem; font-weight: 600;">Sign In</button>
       </form>
     </div>
-  </div>
+  </main>
 
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 GKR & Co, Chartered Accountants. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Mobile Nav Script & Login Handler -->
   <script>
+    // Navigation Drawer Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navLinks.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // Form submission
     const loginForm = document.getElementById('loginForm');
     const submitBtn = document.getElementById('submitBtn');
     const errorDiv = document.getElementById('errorMessage');

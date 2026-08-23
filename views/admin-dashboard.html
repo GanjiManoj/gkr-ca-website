@@ -2,166 +2,209 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Admin Dashboard | GKR & Co.</title>
+  
+  <!-- Shared Stylesheet -->
+  <link rel="stylesheet" href="/styles.css">
   <style>
-    body {
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      padding: 2rem;
-    }
-    .header {
+    .dashboard-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 2rem;
-    }
-    h1 {
-      color: #38bdf8;
-      margin: 0;
-      font-size: 1.75rem;
-    }
-    h2 {
-      color: #38bdf8;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-      font-size: 1.35rem;
-    }
-    .header-actions {
-      display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
-      align-items: center;
     }
-    .add-case-btn {
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: background-color 0.2s;
-    }
-    .add-case-btn:hover {
-      background: #7dd3fc;
-    }
-    .logout-btn {
-      background: transparent;
-      border: 1px solid #ef4444;
-      color: #ef4444;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    .logout-btn:hover {
-      background: #ef4444;
-      color: #fff;
-    }
+
     .table-container {
-      background: #1e293b;
-      border-radius: 8px;
-      border: 1px solid #334155;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
       overflow-x: auto;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      -webkit-overflow-scrolling: touch;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
+      min-width: 650px;
     }
+
     th {
       background: #1e3a8a;
-      color: #f8fafc;
-      padding: 1rem;
-      font-size: 0.9rem;
+      color: var(--text-main);
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
       font-weight: 600;
+      white-space: nowrap;
     }
+
     td {
-      padding: 1rem;
-      border-bottom: 1px solid #334155;
-      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
       color: #cbd5e1;
     }
+
     tr:last-child td {
       border-bottom: none;
     }
-    a.phone-link {
-      color: #38bdf8;
+
+    .phone-link {
+      color: var(--accent-blue);
       text-decoration: underline;
     }
+
     .delete-btn {
       background: rgba(239, 68, 68, 0.15);
       color: #fca5a5;
       border: 1px solid rgba(239, 68, 68, 0.4);
-      padding: 0.4rem 0.8rem;
+      padding: 0.4rem 0.75rem;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.8rem;
       font-weight: 600;
       transition: all 0.2s;
     }
+
     .delete-btn:hover {
       background: #ef4444;
       color: #fff;
     }
+
     .no-data {
       text-align: center;
       padding: 2rem;
-      color: #94a3b8;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      color: #ef4444 !important;
+      border-color: #ef4444;
+    }
+
+    .logout-btn:hover {
+      background: #ef4444;
+      color: #ffffff !important;
+    }
+
+    @media (max-width: 640px) {
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .action-bar {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .action-bar .btn, .action-bar .admin-nav-btn {
+        flex: 1;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>Admin Control Dashboard</h1>
-    <div class="header-actions">
-      <a href="/admin/add-case-study" class="add-case-btn">+ Add Case Study</a>
-      <a href="/admin/logout" class="logout-btn">Logout</a>
+  <!-- Site Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">GKR & Co. <span>Admin Portal</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">View Site</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/admin/add-case-study" class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">+ Add Case Study</a></li>
+          <li><a href="/admin/logout" class="admin-nav-btn logout-btn">Logout</a></li>
+        </ul>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <h2>Client Enquiries</h2>
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Client Name</th>
-          <th>Phone</th>
-          <th>Message</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="enquiriesTable">
-        <tr><td colspan="5" class="no-data">Loading enquiries...</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- Dashboard Main Content -->
+  <section class="section">
+    <div class="container">
+      
+      <div class="dashboard-header">
+        <h1 style="color: var(--accent-blue); font-size: 1.75rem; margin: 0;">Admin Control Dashboard</h1>
+        <div class="action-bar">
+          <a href="/admin/add-case-study" class="btn" style="font-size: 0.85rem; padding: 0.5rem 0.85rem;">+ Add Case Study</a>
+          <a href="/admin/logout" class="admin-nav-btn logout-btn" style="text-decoration: none; display: inline-block; padding: 0.5rem 0.85rem; text-align: center;">Logout</a>
+        </div>
+      </div>
 
-  <h2>Published Case Studies</h2>
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Title</th>
-          <th>Description Preview</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="caseStudiesTable">
-        <tr><td colspan="4" class="no-data">Loading case studies...</td></tr>
-      </tbody>
-    </table>
-  </div>
+      <!-- Client Enquiries Table -->
+      <h2 style="color: var(--accent-blue); font-size: 1.25rem; margin-bottom: 0.75rem;">Client Enquiries</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Client Name</th>
+              <th>Phone</th>
+              <th>Message</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="enquiriesTable">
+            <tr><td colspan="5" class="no-data">Loading enquiries...</td></tr>
+          </tbody>
+        </table>
+      </div>
 
+      <!-- Case Studies Table -->
+      <h2 style="color: var(--accent-blue); font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem;">Published Case Studies</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Title</th>
+              <th>Description Preview</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="caseStudiesTable">
+            <tr><td colspan="4" class="no-data">Loading case studies...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 GKR & Co, Chartered Accountants. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts & Mobile Nav -->
   <script>
+    // Navigation Drawer Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navLinks.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // API Integrations
     async function loadEnquiries() {
       try {
         const res = await fetch('/api/admin/enquiries');
@@ -170,14 +213,14 @@
         const enquiries = await res.json();
         const tbody = document.getElementById('enquiriesTable');
 
-        if (enquiries.length === 0) {
+        if (!Array.isArray(enquiries) || enquiries.length === 0) {
           tbody.innerHTML = '<tr><td colspan="5" class="no-data">No enquiries found.</td></tr>';
           return;
         }
 
         tbody.innerHTML = enquiries.map(item => `
           <tr>
-            <td>${item.date || new Date(item.createdAt).toLocaleString()}</td>
+            <td style="white-space: nowrap;">${item.date || new Date(item.createdAt).toLocaleDateString()}</td>
             <td><strong>${item.name}</strong></td>
             <td><a href="tel:${item.phone}" class="phone-link">${item.phone}</a></td>
             <td>${item.message}</td>
@@ -197,16 +240,16 @@
         const studies = await res.json();
         const tbody = document.getElementById('caseStudiesTable');
 
-        if (studies.length === 0) {
+        if (!Array.isArray(studies) || studies.length === 0) {
           tbody.innerHTML = '<tr><td colspan="4" class="no-data">No case studies published yet.</td></tr>';
           return;
         }
 
         tbody.innerHTML = studies.map(item => `
           <tr>
-            <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+            <td style="white-space: nowrap;">${new Date(item.createdAt).toLocaleDateString()}</td>
             <td><strong>${item.title}</strong></td>
-            <td>${item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description}</td>
+            <td>${item.description.length > 70 ? item.description.substring(0, 70) + '...' : item.description}</td>
             <td>
               <button class="delete-btn" onclick="deleteCaseStudy('${item._id}')">Delete</button>
             </td>
