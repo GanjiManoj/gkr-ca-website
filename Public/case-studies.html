@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Studies | GKR & Co.</title>
+  <style>
+    body { 
+      background: #0b0f19; 
+      color: #f8fafc; 
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 0; 
+    }
+    .navbar { 
+      background: #0f172a; 
+      padding: 1rem 2rem; 
+      border-bottom: 1px solid #1e293b; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+    }
+    .brand { 
+      font-weight: bold; 
+      color: #fff; 
+      text-decoration: none; 
+      font-size: 1.25rem;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #38bdf8;
+    }
+    .admin-nav-btn {
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8 !important;
+      border: 1px solid #38bdf8;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.2s !important;
+    }
+    .admin-nav-btn:hover {
+      background: #38bdf8;
+      color: #0f172a !important;
+    }
+    .container { 
+      max-width: 900px; 
+      margin: 2rem auto; 
+      padding: 0 1rem; 
+    }
+    h1 { 
+      color: #38bdf8; 
+      text-align: center; 
+      margin-bottom: 2rem; 
+    }
+    .grid { 
+      display: grid; 
+      gap: 1.5rem; 
+    }
+    .card { 
+      background: #1e293b; 
+      border: 1px solid #334155; 
+      padding: 1.5rem; 
+      border-radius: 10px; 
+    }
+    .card h3 { 
+      color: #38bdf8; 
+      margin-top: 0; 
+    }
+    .card p { 
+      color: #cbd5e1; 
+      line-height: 1.6; 
+      white-space: pre-line; 
+    }
+    .date { 
+      font-size: 0.75rem; 
+      color: #64748b; 
+      margin-top: 1rem; 
+      display: block; 
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">GKR & Co.</a>
+    <ul class="nav-links">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#profile">About</a></li>
+      <li><a href="/case-studies">Case Studies</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/admin/login" class="admin-nav-btn">Admin Portal</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Our Case Studies</h1>
+    <div id="studiesList" class="grid">Loading case studies...</div>
+  </div>
+
+  <script>
+    async function loadCaseStudies() {
+      const container = document.getElementById('studiesList');
+      try {
+        const res = await fetch('/api/case-studies');
+        const studies = await res.json();
+
+        if (studies.length === 0) {
+          container.innerHTML = '<p style="text-align:center; color:#94a3b8;">No case studies available yet.</p>';
+          return;
+        }
+
+        container.innerHTML = studies.map(s => `
+          <div class="card">
+            <h3>${s.title}</h3>
+            <p>${s.description}</p>
+            <span class="date">Published: ${new Date(s.createdAt).toLocaleDateString()}</span>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = '<p style="color:#ef4444; text-align:center;">Failed to load case studies.</p>';
+      }
+    }
+
+    loadCaseStudies();
+  </script>
+</body>
+</html>

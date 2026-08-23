@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>GKR & Co | Chartered Accountants</title>
+  <style>
+    /* Dark Theme Variables */
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #26334d;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #38bdf8;
+      --gold: #f59e0b;
+      --border: #334155;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Header & Navigation */
+    header {
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 70px;
+      padding: 0.5rem 0;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo span {
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-blue);
+    }
+
+    .admin-nav-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--accent-blue) !important;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: clamp(3rem, 8vw, 6rem) 0;
+      background: radial-gradient(circle at top right, #1e3a8a 0%, var(--bg-dark) 70%);
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--accent-blue);
+      color: #0f172a;
+      padding: 0.85rem 1.75rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background-color: #7dd3fc;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      color: var(--text-main);
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Scrollable Carousel Areas of Practice */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 0.5rem 0 1.25rem 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 1.75rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      flex: 0 0 88%;
+      max-width: 360px;
+      scroll-snap-align: center;
+      transition: border-color 0.3s, background-color 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      border-color: var(--accent-blue);
+      background-color: var(--bg-card-hover);
+    }
+
+    .card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .badge-certified {
+      display: inline-block;
+      background-color: rgba(245, 158, 11, 0.15);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .slider-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      touch-action: manipulation;
+    }
+
+    .slider-btn:hover, .slider-btn:active {
+      background: var(--accent-blue);
+      color: var(--bg-dark);
+      border-color: var(--accent-blue);
+    }
+
+    /* About Section Profile Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .profile-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .profile-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .profile-info h3 {
+      font-size: 1.35rem;
+      color: var(--text-main);
+    }
+
+    .profile-info .title {
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-blue);
+    }
+
+    .modal-body h2 {
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+      font-size: 1.75rem;
+    }
+
+    .modal-body .overview {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .service-item {
+      margin-bottom: 1.25rem;
+      padding: 1rem;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .service-item h4 {
+      color: var(--text-main);
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .service-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Contact Section Layout */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .contact-details p {
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+      word-break: break-word;
+    }
+
+    .contact-details strong {
+      color: var(--text-main);
+    }
+
+    .contact-details a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .form-group input, 
+    .form-group textarea {
+      width: 100%;
+      padding: 0.85rem;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    footer {
+      background-color: #090d16;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Media Queries */
+    @media (min-width: 640px) {
+      .card {
+        flex: 0 0 320px;
+        scroll-snap-align: start;
+      }
+      .logo {
+        flex-direction: row;
+        gap: 0.5rem;
+        align-items: baseline;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .team-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .contact-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .nav-links {
+        gap: 0.85rem;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">GKR & Co. <span>Chartered Accountants</span></a>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#profile">About</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="/admin/login" class="admin-nav-btn">Admin Portal</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>GKR & Co. Chartered Accountants</h1>
+        <p>Providing trusted auditing, corporate taxation, statutory compliance, and business advisory services tailored to your financial and regulatory needs.</p>
+        <a href="#contact" class="btn">Contact Office</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Main Services</h2>
+        <p>Swipe on mobile or use arrows to scroll. Click any card to view detailed services.</p>
+      </div>
+
+      <div class="carousel-container">
+        <div class="carousel-track" id="sliderTrack">
+          <div class="card" onclick="openModal('taxation')">
+            <span class="icon">📄</span>
+            <h3>Direct & Indirect Taxation</h3>
+            <p>Comprehensive tax return filings, compliance management, GST advisory, and TDS processing.</p>
+          </div>
+
+          <div class="card" onclick="openModal('litigation')">
+            <span class="icon">⚖️</span>
+            <h3>Tax Litigation & Representation</h3>
+            <p>Representation from first notice to tribunal, building robust submissions that withstand scrutiny.</p>
+          </div>
+
+          <div class="card" onclick="openModal('international-tax')">
+            <span class="icon">🌐</span>
+            <h3>International Taxation</h3>
+            <span class="badge-certified">Certified Expert by ICAI</span>
+            <p>DTAA relief, cross-border structuring, 15CA/CB certification, and PE risk assessment.</p>
+          </div>
+
+          <div class="card" onclick="openModal('transfer-pricing')">
+            <span class="icon">🔄</span>
+            <h3>Transfer Pricing</h3>
+            <span class="badge-certified">Certified Expert by ICAI</span>
+            <p>Benchmarking studies, Master File documentation, Form 3CEB, APA, and audit defense.</p>
+          </div>
+
+          <div class="card" onclick="openModal('audit')">
+            <span class="icon">🔍</span>
+            <h3>Audit and Assurance</h3>
+            <p>Statutory, Tax, Internal, Forensic, Due Diligence, and Stock & Bank Audits.</p>
+          </div>
+
+          <div class="card" onclick="openModal('corporate')">
+            <span class="icon">🏢</span>
+            <h3>Corporate & Business Advisory</h3>
+            <p>Company setup, MCA filings, Valuation, FEMA compliance, and secretarial support.</p>
+          </div>
+
+          <div class="card" onclick="openModal('outsourcing')">
+            <span class="icon">📊</span>
+            <h3>Accounting & Outsourcing</h3>
+            <p>Ongoing bookkeeping, financial statements, payroll processing, and Virtual CFO services.</p>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="slider-btn" onclick="slide(-1)" aria-label="Previous Service">&#10094;</button>
+          <button class="slider-btn" onclick="slide(1)" aria-label="Next Service">&#10095;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="profile" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Leadership Team</h2>
+        <p>Meet our experienced partners leading technical rigor and professional discipline</p>
+      </div>
+
+      <div class="team-grid">
+        <div class="profile-card">
+          <div class="profile-header">
+            <img src="/images/kalyan-ram-ganji.jpg" alt="CA Kalyan Ram Ganji" class="profile-img" onerror="this.src='https://via.placeholder.com/150/1e293b/38bdf8?text=CA+Kalyan';">
+            <div class="profile-info">
+              <h3>CA Kalyan Ram Ganji</h3>
+              <p class="title">Managing Partner</p>
+              <p style="font-size: 0.85rem; color: var(--accent-blue);">Chartered Accountant</p>
+            </div>
+          </div>
+          <p style="color: var(--text-muted);">A Chartered Accountant with focused expertise in Transfer Pricing, International Taxation, and Tax Litigation & Representation, Kalyan Ram has built and defended documentation across a wide range of industries — work that demands both technical precision and the discipline to see it through. His practice extends beyond specialization into the full spectrum of audit, tax, and advisory services, bringing the same rigor to every engagement he takes on.</p>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-header">
+            <img src="/images/hemanth-vuppala.jpg" alt="CA Hemanth Vuppala" class="profile-img" onerror="this.src='https://via.placeholder.com/150/1e293b/38bdf8?text=CA+Hemanth';">
+            <div class="profile-info">
+              <h3>CA Hemanth Vuppala</h3>
+              <p class="title">Partner</p>
+              <p style="font-size: 0.85rem; color: var(--accent-blue);">Chartered Accountant & CMA</p>
+            </div>
+          </div>
+          <p style="color: var(--text-muted);">Chartered Accountant and CMA with experience in Income Tax, GST, audits, financial advisory, corporate compliance, PSU assignments, startup advisory and regulatory matters. Handles taxation, litigation, audit assignments and strategic financial advisory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact Details</h2>
+      </div>
+      <div class="contact-wrapper">
+        <div class="card" style="cursor: default;">
+          <h3>Office Location</h3>
+          <br>
+          <p><strong>Firm Name:</strong><br>GKR & Co, Chartered Accountants</p>
+          <p><strong>Address:</strong><br>302, SriNilaya Enclave, Nagarjuna Nagar,<br>Ameerpet, Hyderabad - 500073</p>
+          <p><strong>Contact Numbers:</strong><br>
+            <a href="tel:8008211057">+91 8008211057</a> / <a href="tel:8977481058">+91 8977481058</a>
+          </p>
+        </div>
+
+        <form class="card" style="cursor: default;" id="publicEnquiryForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message / Inquiry</label>
+            <textarea id="message" rows="4" placeholder="How can we assist you?" required></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Submit Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-body" id="modalContent">
+        </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 GKR & Co, Chartered Accountants. All rights reserved. Compliant with ICAI Professional Guidelines.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Carousel Slider Logic
+    function slide(direction) {
+      const track = document.getElementById('sliderTrack');
+      const card = track.querySelector('.card');
+      const cardWidth = card.offsetWidth + 20; // Card width + gap
+      track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    const serviceDetails = {
+      taxation: {
+        title: "Direct & Indirect Taxation",
+        overview: "End-to-end tax compliance and planning tailored for individuals, firms, and corporate entities.",
+        items: [
+          { title: "Income Tax Filing & Planning", desc: "Accurate return filing and legal tax minimization for individuals, firms, and companies." },
+          { title: "GST Compliance & Advisory", desc: "Registration, return filing, audit, and advisory on GST applicability and credits." },
+          { title: "TDS/TCS Compliance", desc: "End-to-end support for deduction, deposit, and return filing." }
+        ]
+      },
+      litigation: {
+        title: "Tax Litigation & Representation",
+        overview: "When a matter moves from compliance to dispute, preparation is everything. We represent clients from the first notice through to tribunal, building each submission on documentation that holds up, not just argument that sounds good.",
+        items: [
+          { title: "Assessment & Reassessment Proceedings", desc: "Handling notices, documentation defense, and representation before assessing officers." },
+          { title: "Commissioner (Appeals) Representation", desc: "Drafting appeals, grounds, and presenting oral and written submissions." },
+          { title: "Dispute Resolution Panel (DRP)", desc: "Objection filings and strategic resolution support for cross-border cases." },
+          { title: "Income Tax Appellate Tribunal (ITAT)", desc: "Full tribunal representation, paper-book compilation, and legal arguments." },
+          { title: "Search, Seizure & Survey Matters", desc: "Handling search proceedings, post-search assessments, and disclosure strategies." }
+        ]
+      },
+      'international-tax': {
+        title: "International Taxation",
+        badge: "Certified Expert by ICAI",
+        overview: "For businesses and individuals with income, investments, or operations spanning multiple jurisdictions, we structure for compliance and efficiency — reading treaty provisions the way they're meant to be read, not just cited.",
+        items: [
+          { title: "DTAA Interpretation & Treaty Relief", badge: "Certified Expert by ICAI", desc: "Expert interpretation of double taxation avoidance agreements to optimize foreign tax credits." },
+          { title: "Cross-Border Structuring Advisory", desc: "Structuring international business models for optimal tax compliance and flow of funds." },
+          { title: "NRI & Expatriate Taxation", desc: "Tax planning and filing support for non-residents and expatriates operating in India." },
+          { title: "Withholding Tax & Form 15CA/CB Certification", desc: "Seamless certification for foreign remittances compliant with income tax regulations." },
+          { title: "Permanent Establishment (PE) Risk Assessment", desc: "Evaluating business presence risks and structuring operations to mitigate unintended PE exposure." }
+        ]
+      },
+      'transfer-pricing': {
+        title: "Transfer Pricing",
+        badge: "Certified Expert by ICAI",
+        overview: "We handle transfer pricing as a discipline in itself, not an add-on to international tax. From benchmarking studies to documentation and audit defense, our work is built to withstand scrutiny from tax authorities on both sides of a transaction.",
+        items: [
+          { title: "TP Study & Benchmarking Analysis", badge: "Certified Expert by ICAI", desc: "Robust economic analysis and database benchmarking studies." },
+          { title: "Local File & Master File Documentation", desc: "Three-tiered transfer pricing documentation compliance." },
+          { title: "Accountant's Report (Form 3CEB)", desc: "Auditing and certifying international and specified domestic transactions." },
+          { title: "Advance Pricing Agreements (APA)", desc: "Unilateral, bilateral, and multilateral APA negotiations and filings." },
+          { title: "Safe Harbour Filings", desc: "Evaluation and filing under Safe Harbour rules for reduced litigation." },
+          { title: "TP Audit Representation & Litigation Support", desc: "Defense of transfer pricing methodologies before TPO and appellate bodies." }
+        ]
+      },
+      audit: {
+        title: "Audit and Assurance",
+        overview: "The foundation of our practice. Every audit — statutory or specialized — is handled with the same discipline, so what we sign off on holds up to scrutiny from regulators, lenders, and boards alike.",
+        items: [
+          { title: "Statutory Audit", desc: "Independent examination of financial statements under the Companies Act to ensure a true and fair view." },
+          { title: "Tax Audit", desc: "Verification of accounts under Section 44AB for accurate income reporting and compliance." },
+          { title: "Internal Audit", desc: "Evaluation of internal controls and processes to strengthen governance and efficiency." },
+          { title: "Forensic Audit", desc: "Investigation into financial records to detect fraud and support legal proceedings." },
+          { title: "Due Diligence Audit", desc: "Financial and operational review before mergers, acquisitions, or investments." },
+          { title: "Stock & Bank Audit", desc: "Verification of inventory and banking records as required by lenders and regulators." }
+        ]
+      },
+      corporate: {
+        title: "Corporate & Business Advisory",
+        overview: "Comprehensive secretarial and corporate compliance services throughout the lifecycle of your company.",
+        items: [
+          { title: "Company & LLP Incorporation", desc: "End-to-end registration and setup for private limited companies and LLPs." },
+          { title: "ROC / MCA Compliance", desc: "Statutory filings, board resolutions, and secretarial records under the Companies Act." },
+          { title: "Business Valuation", desc: "Fair value determination for shares, businesses, and assets." },
+          { title: "FEMA & RBI Compliance", desc: "Advisory on FDI, ODI, and cross-border capital transaction compliance." }
+        ]
+      },
+      outsourcing: {
+        title: "Accounting & Outsourcing",
+        overview: "Reliable books are the starting point for everything else — audit, tax, and advisory. We run this as a standing engagement for many clients, not a one-off cleanup job.",
+        items: [
+          { title: "Bookkeeping & Write-up", desc: "Accurate, up-to-date financial records so you can focus on operations." },
+          { title: "Financial Statement Preparation", desc: "Statements prepared under Ind AS, IFRS, or GAAP as applicable." },
+          { title: "Payroll Processing", desc: "Salary computation, statutory deductions, and labor law compliance." },
+          { title: "Virtual CFO Services", desc: "Outsourced financial leadership for strategic planning and reporting." }
+        ]
+      }
+    };
+
+    function openModal(key) {
+      const data = serviceDetails[key];
+      if (!data) return;
+
+      let html = `
+        <h2>${data.title}</h2>
+        ${data.badge ? `<span class="badge-certified">${data.badge}</span>` : ''}
+        <p class="overview">${data.overview}</p>
+        <div class="services-list">
+      `;
+
+      data.items.forEach(item => {
+        html += `
+          <div class="service-item">
+            <h4>
+              ${item.title}
+              ${item.badge ? `<span class="badge-certified">${item.badge}</span>` : ''}
+            </h4>
+            <p>${item.desc}</p>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+
+      document.getElementById('modalContent').innerHTML = html;
+      document.getElementById('serviceModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('serviceModal').classList.remove('active');
+    }
+
+    // Close modal on clicking outside content area
+    window.onclick = function(event) {
+      const modal = document.getElementById('serviceModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+
+    // Form Submission Handler
+    document.getElementById('publicEnquiryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+
+      try {
+        const res = await fetch('/api/enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, message })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          alert('Inquiry sent successfully.');
+          e.target.reset();
+        } else {
+          alert('Error: ' + (data.error || 'Failed to send inquiry'));
+        }
+      } catch (err) {
+        alert('Could not reach the server. Make sure node server.js is running.');
+      }
+    });
+  </script>
+</body>
+</html>
