@@ -11,16 +11,35 @@ const PORT = process.env.PORT || 3000;
 
 // Validate Environment Variables on Startup
 if (!process.env.ADMIN_USER || !process.env.ADMIN_PASS) {
-  console.warn('⚠️ WARNING: ADMIN_USER or ADMIN_PASS is not defined in .env! Check your environment settings.');
+  console.warn('⚠️ WARNING: ADMIN_USER or ADMIN_PASS is not defined in .env!');
 }
 
 const ADMIN_USER = (process.env.ADMIN_USER || '').trim();
 const ADMIN_PASS = (process.env.ADMIN_PASS || '').trim();
 
-// Connect to MongoDB Atlas
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch((err) => console.error('MongoDB Connection Error:', err));
+// Optimized MongoDB Connection for Vercel Serverless
+let isConnected = false;
+async function connectDB() {
+  if (isConnected || mongoose.connection.readyState >= 1) {
+    isConnected = true;
+    return;
+  }
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    isConnected = true;
+    console.log('Connected to MongoDB Atlas');
+  } catch (err) {
+    console.error('MongoDB Connection Error:', err);
+  }
+}
+
+// Middleware to ensure DB is connected before handling API requests
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    await connectDB();
+  }
+  next();
+});
 
 // Define Enquiry Schema & Model
 const enquirySchema = new mongoose.Schema({
@@ -34,7 +53,7 @@ const enquirySchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-const Enquiry = mongoose.model('Enquiry', enquirySchema);
+const Enquiry = mongoose.models.Enquiry || mongoose.model('Enquiry', enquirySchema);
 
 // Define Case Study Schema & Model
 const caseStudySchema = new mongoose.Schema({
@@ -43,7 +62,7 @@ const caseStudySchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-const CaseStudy = mongoose.model('CaseStudy', caseStudySchema);
+const CaseStudy = mongoose.models.CaseStudy || mongoose.model('CaseStudy', caseStudySchema);
 
 // Middlewares
 app.use(express.json());
@@ -54,7 +73,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'gkr-ca-secret-key-2026',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 3600000 } // 1 hour
+  cookie: { maxAge: 3600000 }
 }));
 
 // Instantly resolve favicon requests
@@ -148,7 +167,6 @@ app.post('/api/admin/case-studies', requireAdmin, async (req, res) => {
   }
 });
 
-// Delete Case Study by ID (Protected Admin API)
 app.delete('/api/admin/case-studies/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
@@ -195,4 +213,9 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+// Start local server during local dev, export module for Vercel Serverless
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+}
+
+module.exports = app;
