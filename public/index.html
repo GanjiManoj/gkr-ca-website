@@ -89,7 +89,7 @@
       padding: 0 1.25rem;
     }
 
-    /* Header & Navigation */
+    /* Header & Mobile Navigation */
     header {
       background-color: rgba(15, 23, 42, 0.95);
       backdrop-filter: blur(8px);
@@ -122,6 +122,15 @@
       font-weight: 500;
     }
 
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
     .nav-links {
       display: flex;
       gap: 1.5rem;
@@ -147,6 +156,7 @@
       color: var(--accent-blue) !important;
       padding: 0.4rem 0.8rem;
       border-radius: 6px;
+      white-space: nowrap;
     }
 
     /* Hero Section */
@@ -498,7 +508,7 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Media Queries */
+    /* Mobile Responsive Breakpoints & Navigation Styling */
     @media (min-width: 640px) {
       .card {
         flex: 0 0 320px;
@@ -521,13 +531,35 @@
       }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
       .nav-links {
-        gap: 0.85rem;
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-dark);
+        border-bottom: 1px solid var(--border);
+        padding: 1.25rem;
+        gap: 1rem;
+        align-items: flex-start;
       }
-      .nav-links a {
-        font-size: 0.85rem;
+
+      .nav-links.active {
+        display: flex;
       }
+
+      .admin-nav-btn {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+      }
+
       .profile-header {
         flex-direction: column;
         text-align: center;
@@ -541,7 +573,8 @@
     <div class="container">
       <nav>
         <a href="#" class="logo">GKR & Co. <span>Chartered Accountants</span></a>
-        <ul class="nav-links">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+        <ul class="nav-links" id="navLinks">
           <li><a href="#services">Services</a></li>
           <li><a href="#profile">About</a></li>
           <li><a href="/case-studies">Case Studies</a></li>
@@ -665,7 +698,7 @@
         <h2>Contact Details</h2>
       </div>
       <div class="contact-wrapper">
-        <div class="card" style="cursor: default;">
+        <div class="card contact-details" style="cursor: default;">
           <h3>Office Location</h3>
           <br>
           <p><strong>Firm Name:</strong><br>GKR & Co, Chartered Accountants</p>
@@ -698,7 +731,7 @@
     <div class="modal-container">
       <button class="modal-close" onclick="closeModal()">&times;</button>
       <div class="modal-body" id="modalContent">
-        </div>
+      </div>
     </div>
   </div>
 
@@ -709,6 +742,21 @@
   </footer>
 
   <script>
+    // Toggle Mobile Navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
     // Carousel Slider Logic
     function slide(direction) {
       const track = document.getElementById('sliderTrack');
